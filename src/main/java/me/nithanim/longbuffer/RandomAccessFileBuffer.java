@@ -196,6 +196,10 @@ public class RandomAccessFileBuffer extends AbstractBuffer implements Disposable
             byte[] buffer = new byte[length > 1024 ? 1024 : (int)length];
 
             while(bytesRemaining > 0) {
+                if(bytesRemaining < buffer.length) {
+                    buffer = new byte[(int)bytesRemaining];
+                }
+                
                 src.getBytes(srcIndex + position, buffer);
                 raf.seek(index + position);
                 raf.write(buffer);
